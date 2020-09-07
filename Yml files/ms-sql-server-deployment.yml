@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-sql-server-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ms-sql-server-pod
+  template:
+    metadata:
+      labels:
+        app: ms-sql-server-pod
+    spec:
+      securityContext:
+        fsGroup: 10001
+      containers:
+      - env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: Your_password123
+        name: ms-sql-server-container
+        image: microsoft/mssql-server-linux:latest
+        ports:
+        - containerPort: 1433
+        volumeMounts:
+          - mountPath: /var/opt/mssql/data
+            name: mssql
+      volumes:
+        - name: mssql
+          persistentVolumeClaim:
+            claimName: pvc-nfs-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-sql-server
+spec:
+  selector:
+    app: ms-sql-server-pod
+  ports:
+  - port: 1433
+    targetPort: 1433
+  type: ClusterIP
+
+
+

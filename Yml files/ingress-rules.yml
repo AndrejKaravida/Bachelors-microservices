@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+spec:
+  rules:
+  
+  - host: car.localhost
+    http:
+      paths:
+      - backend:
+         serviceName: car-api-service
+         servicePort: 5001
+
+  - host: avio.localhost
+    http:
+      paths:
+      - backend:
+         serviceName: avio-api-service
+         servicePort: 5000
+
+  - host: auth.localhost
+    http:
+      paths:
+      - backend:
+         serviceName: auth-api-service
+         servicePort: 5002
+
+

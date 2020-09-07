@@ -1,0 +1,17 @@
+<div>
+
+  <div style="margin-top: 10px; text-align: center;">
+    <span class="sidetitle">Vehicles on discount:</span>
+  </div>
+
+  <hr>
+
+  <ng-container *ngIf="vehiclesOnDiscount?.length > 0"> 
+    <div *ngFor="let vehicle of vehiclesOnDiscount">
+      <app-discounted-vehicle [vehicle]="vehicle" [admin]="true" (clicked3)="onRemoveVehicle(vehicle)"
+      (clicked2)="onEditVehicle(vehicle)"
+      (clicked4)="onChangeVehicleLocation(vehicle)"></app-discounted-vehicle>
+    </div>
+  </ng-container>
+
+</div>

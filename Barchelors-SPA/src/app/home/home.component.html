@@ -1,0 +1,152 @@
+<div class="container mt-5" style="height: 100%vh;">
+<div class="row">
+  <h1 class="title">Need a cheap flight or car rental service?</h1>
+</div>
+
+  <div class="row">
+    <div class="col">
+      <mat-card class="mat-elevation-z8 mat-card2"> 
+
+        <h5 style="text-align: center;">Find Car company</h5>
+        <mat-divider></mat-divider>
+
+        <div style="margin-top: 15px;">
+          <mat-form-field appearance="outline" style="width: 40%;">
+            <mat-label>Starting date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="startingDate" [ngModelOptions]="{standalone: true}" 
+            [min]="startingMinDate" [max]="returningDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 40%; margin-left: 40px;">
+            <mat-label>Returning date</mat-label>
+            <input matInput  [matDatepicker]="picker2"  [(ngModel)]="returningDate" [ngModelOptions]="{standalone: true}" 
+            [min]="returningMinDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker >
+          </mat-form-field>
+      </div>
+
+        <div>
+            <mat-form-field appearance="outline" style="width: 40%">
+              <mat-label>Location:</mat-label>
+              <mat-select [(ngModel)]="location" [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let branch of branches" [value]="branch.city">
+                  {{branch.city}}, {{branch.country}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="margin-left: 40px;">
+              <mat-label>Name:</mat-label>
+              <input matInput name="name" placeholder="Enter name" (keyup)="onSearchByName($event.target.value)" ngModel>
+            </mat-form-field>
+        </div>
+
+        <div style="text-align: center;">
+          <button mat-raised-button color="warn" (click)="loadCarCompanies()">Reset</button>
+          <button mat-raised-button color="accent" style="margin-left: 10px;" (click)="searchCarCompanies()">Search companies</button>
+        </div>
+        
+      </mat-card>
+    </div>
+
+    <div class="col">
+      <mat-card class="mat-elevation-z8 mat-card2"> 
+        <h5 style="text-align: center;">Find Air company</h5>
+        <mat-divider></mat-divider>
+
+        <div style="margin-top: 15px;">
+          <mat-form-field appearance="outline" style="width: 40%;">
+            <mat-label>Starting date</mat-label>
+            <input matInput [matDatepicker]="picker3" [(ngModel)]="startingDate" [ngModelOptions]="{standalone: true}" 
+            [min]="startingMinDate" [max]="returningDate">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 40%; margin-left: 40px;">
+            <mat-label>Returning date</mat-label>
+            <input matInput  [matDatepicker]="picker4"  [(ngModel)]="returningDate" [ngModelOptions]="{standalone: true}" 
+            [min]="returningMinDate">
+            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+            <mat-datepicker #picker4></mat-datepicker >
+          </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline" style="width: 40%">
+          <mat-label>Starting destination:</mat-label>
+          <mat-select [(ngModel)]="startingLocation" [ngModelOptions]="{standalone: true}">
+            <mat-option *ngFor="let destination of destinations" [value]="destination.city">
+              {{destination.city}}, {{destination.country}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="margin-left: 40px; width: 40%;">
+          <mat-label>Arrival destination:</mat-label>
+          <mat-select [(ngModel)]="returningLocation" [ngModelOptions]="{standalone: true}">
+            <mat-option *ngFor="let destination of destinations" [value]="destination.city">
+              {{destination.city}}, {{destination.country}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div style="text-align: center;">
+      <button (click)="SearchFlights()" mat-raised-button color="accent">Search flights</button>
+    </div>
+
+
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 40px;">
+
+    <div class="col"> 
+      <mat-card class="mat-elevation-z8 mat-card1"> 
+        <div style="width: 100%;">
+          <span style="font-size: 21px; margin-left: 170px;"><b> Car companies:</b></span>
+          <span style="float: right; cursor: pointer;" [matMenuTriggerFor]="menu2">Sort</span>
+
+          <mat-menu #menu2="matMenu">
+            <button mat-menu-item (click)="sortCarName()">Name A-Z</button>
+            <button mat-menu-item (click)="onSortCarCompanies()">Address A-Z</button>
+          </mat-menu>
+
+        </div>
+        <mat-divider></mat-divider>
+        <ng-container *ngIf="rentaCarCompanies?.length > 0"> 
+          <div *ngFor="let carCompany of rentaCarCompanies">
+            <app-rentalcompany-card [carCompany]="carCompany"></app-rentalcompany-card>
+          </div>
+        </ng-container>
+    </mat-card>
+    </div>
+
+    <div class="col">
+      <mat-card class="mat-elevation-z8 mat-card1"> 
+        <div style="width: 100%;">
+            <span style="font-size: 21px; margin-left: 170px;"><b> Avio companies:</b></span>
+            <span style="float: right; cursor: pointer;" [matMenuTriggerFor]="menu">Sort</span>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="onSortCompanies()">Name A-Z</button>
+              <button mat-menu-item (click)="sortAvioAddress()">Address A-Z</button>
+            </mat-menu>
+
+        </div>
+        <mat-divider></mat-divider>
+          <ng-container *ngIf="avioCompanies?.length > 0"> 
+            <div *ngFor="let avioCompany of avioCompanies">
+              <app-aviocompany-card [avioCompany]="avioCompany"></app-aviocompany-card>
+            </div>
+          </ng-container>
+      </mat-card>
+    </div>
+  </div>
+  
+</div>

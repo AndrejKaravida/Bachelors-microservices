@@ -1,0 +1,154 @@
+<div>
+
+  <div style="margin-top: 10px; text-align: center;">
+    <span class="sidetitle">Define flight data:</span>
+  </div>
+  <!-- <mat-card>Only admin has permission to define new flight data.</mat-card> -->
+  <hr>
+
+  <div  class="col">
+    <mat-card style="height: 70px !important">
+      <mat-form-field style="width: 100% !important;">
+        <mat-label>Departure destination</mat-label>
+        <mat-select [(ngModel)]="newFlight.departureDestination">
+          <mat-option *ngFor="let destination of destinations" [value]="destination?.city">
+            {{destination.city}} ,{{destination.country}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>           
+    </mat-card>
+  </div>
+
+  <div  class="col" style="margin-top:20px;">
+    <mat-card style="height: 70px !important">
+      <mat-form-field style="width: 100% !important;">
+        <mat-label>Arrival destination</mat-label>
+        <mat-select [(ngModel)]="newFlight.arrivalDestination">
+          <mat-option *ngFor="let destination of destinations" [value]="destination?.city">
+            {{destination.city}} ,{{destination.country}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>           
+    </mat-card>
+  </div>
+
+  <div  class="col" style="margin-top: 20px;">
+    <mat-card style="height: 70px !important">
+      <mat-form-field style="width: 100% !important;">
+        <mat-label>Departure date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="newFlight.departureTime"
+         [min]="startingMinDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker >
+      </mat-form-field>
+    </mat-card>
+  </div>
+
+  <div  class="col" style="margin-top: 20px;"> 
+    <mat-card style="height: 70px !important">
+      <mat-form-field style="width: 100% !important;">
+        <mat-label>Arrival date</mat-label>
+        <input matInput [matDatepicker]="picker2" [(ngModel)]="newFlight.arrivalTime"
+        [min]="startingMinDate" >
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker >
+      </mat-form-field>
+    </mat-card>
+  </div>
+
+  <form [formGroup]="form">
+    
+    <div class="col" style="margin-top: 20px;">
+      <span class="sidetitle" style="padding-right: 20px;">Travel duration:</span>
+        <mat-form-field style="width: 50px !important;"  appearance="outline">
+          <input matInput  style="width: 100% !important;" id="seats" formControlName="travelDurations"
+          [ngClass]="(form.controls['travelDurations'].invalid && form.controls['travelDurations'].touched) ? 'is-invalid' : ''">
+      </mat-form-field> MIN
+    </div>
+  
+    <label class="col" style="color: red;" 
+    *ngIf="form.controls['travelDurations'].touched && 
+    !form.controls['travelDurations'].hasError('required') &&
+    !form.controls['travelDurations'].hasError('min') && 
+    !form.controls['travelDurations'].hasError('max') && 
+    form.controls['travelDurations'].invalid
+    ">
+     Only numbers are allowed!
+    </label>
+  
+    <div class="col" style="margin-top: 20px;">
+      <span class="sidetitle" style="padding-right: 20px;">Distances:</span>
+        <mat-form-field style="width: 50px !important;"  appearance="outline">
+          <input matInput  style="width: 100% !important;" id="seats" formControlName="distances"
+          [ngClass]="(form.controls['distances'].invalid && form.controls['distances'].touched) ? 'is-invalid' : ''">
+      </mat-form-field> KM
+    </div>
+  
+    <label class="col" style="color: red;" 
+    *ngIf="form.controls['distances'].touched && 
+    !form.controls['distances'].hasError('required') &&
+    !form.controls['distances'].hasError('min') && 
+    !form.controls['distances'].hasError('max') && 
+    form.controls['distances'].invalid
+    ">
+     Only numbers are allowed!
+    </label>
+
+  <div class="col" style="margin-top: 20px;" >
+    <span class="sidetitle" style="padding-right: 20px;">Max luggage:</span>
+        <mat-form-field style="width: 50px !important;"  appearance="outline">
+          <input matInput  style="width: 100% !important;" id="seats" formControlName="luggages"
+          [ngClass]="(form.controls['luggages'].invalid && form.controls['luggages'].touched) ? 'is-invalid' : ''">
+      </mat-form-field> KG
+  </div>
+
+  <label class="col" style="color: red;" 
+  *ngIf="form.controls['luggages'].touched && 
+  form.controls['luggages'].hasError('max')">
+   Cannot have more than 70 kilograms!
+  </label>
+
+  <label class="col" style="color: red;" 
+  *ngIf="form.controls['luggages'].touched && 
+  !form.controls['luggages'].hasError('required') &&
+  !form.controls['luggages'].hasError('min') && 
+  !form.controls['luggages'].hasError('max') && 
+  form.controls['luggages'].invalid
+  ">
+   Only numbers are allowed!
+  </label>
+
+  
+  
+  <div class="col" style="margin-top: 20px;">
+    <span class="sidetitle" style="padding-right: 20px;">Price:</span>
+    <mat-form-field style="width: 50px !important;"  appearance="outline">
+      <input matInput  style="width: 100% !important;" id="prices" formControlName="prices"
+      [ngClass]="(form.controls['prices'].invalid && form.controls['prices'].touched) ? 'is-invalid' : ''">
+  </mat-form-field> $
+  </div>
+
+  <label class="col" style="color: red;" 
+  *ngIf="form.controls['prices'].touched && 
+  !form.controls['prices'].hasError('required') &&
+  !form.controls['prices'].hasError('min') && 
+  !form.controls['prices'].hasError('max') && 
+  form.controls['prices'].invalid
+  ">
+   Only numbers are allowed!
+  </label>
+
+
+
+
+</form>
+
+
+
+  <div class="col">
+    <button mat-raised-button *ngIf="!isEdit" [disabled]="form.invalid" (click)="SaveFlight()">Add flight</button>
+    <button mat-raised-button   *ngIf="isEdit" [disabled]="form.invalid" (click)="editFlight()">Edit flight</button>
+  </div>
+
+    
+</div>

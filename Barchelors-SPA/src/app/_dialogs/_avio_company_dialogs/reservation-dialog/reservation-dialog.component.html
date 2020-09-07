@@ -1,0 +1,67 @@
+<div>
+
+  <div style="margin-top: 10px; text-align: center;">
+    <span class="sidetitle"><b>Reservation:</b></span>
+  </div>
+  <mat-card><b>Click "Reserve" to reserve this flight.</b></mat-card>
+  <hr>
+
+    <div style="margin-top: 10px;">
+      <span class="sidetitle" style="padding-right: 40px;">Departure destination:</span>
+      <span class="sidetitle">{{data.flight.departureDestination.city}}</span>
+    </div>
+
+    <div style="margin-top: 10px;">
+      <span class="sidetitle" style="padding-right: 40px;">Arrival destination:</span>
+      <span class="sidetitle">{{data.flight.arrivalDestination.city}}</span>
+    </div>
+
+    <div style="margin-top: 10px;">
+      <span class="sidetitle" style="padding-right: 40px;">Departure time:</span>
+      <span class="sidetitle">{{data.flight.departureTime | date:'medium'}}</span>
+  </div>
+    
+    <div style="margin-top: 10px;">
+      <span class="sidetitle" style="padding-right: 40px;">Arrival time:</span>
+      <span class="sidetitle">{{data.flight.arrivalTime | date:'medium'}}</span>
+  </div>
+    
+  <div style="margin-top: 10px;">
+    <span class="sidetitle" style="padding-right: 40px;">Price of ticket:</span>
+    <span class="sidetitle">{{data.flight.ticketPrice}}</span>
+  </div>
+  
+  <div style="margin-top: 10px;">
+    <span class="sidetitle" style="padding-right: 40px;">Travel length:</span>
+    <span class="sidetitle">{{data.flight.travelTime}}</span>
+  </div>
+  <div style="margin-top: 10px;">
+    <form [formGroup]="form">
+    <div class="col" >
+      <span class="sidetitle" style="padding-right: 20px; margin-left: -15px;">Passport number:</span>
+          <mat-form-field style="width: 200px !important; height: 5px;">
+            <input matInput  style="width: 50% !important;" id="seats" formControlName="passport"
+            [ngClass]="(form.controls['passport'].invalid && form.controls['passport'].touched) ? 'is-invalid' : ''">
+        </mat-form-field> 
+    </div>
+  <div>
+    <label class="col" style="color: red;" 
+    *ngIf="form.controls['passport'].touched && 
+    !form.controls['passport'].hasError('required') &&
+    !form.controls['passport'].hasError('min') && 
+    !form.controls['passport'].hasError('max') && 
+    form.controls['passport'].invalid
+    ">
+     Only numbers are allowed!
+    </label>
+  </div>
+    
+
+</form>
+
+
+  <div style="padding-top: 55px; display: inline-block; margin-left: 65px;">
+    <button mat-raised-button color="primary" style="margin-right: 20px;" [disabled]="form.invalid" [mat-dialog-close]="data" (click)="Reserve()" cdkFocusInitial> Reserve</button>
+  </div>
+      
+</div>
