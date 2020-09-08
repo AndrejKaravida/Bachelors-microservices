@@ -30,8 +30,8 @@ Next, open the environment.ts file in the SPA and make changes to the endpoints 
 ```javascript
 export const environmnet = { 
    production: false, 
-   carUrl: 'http://localhost:5001/api/'
-   avioUrl: 'http://localhost:5000/api/'
+   carUrl: 'http://localhost:5001/api/',
+   avioUrl: 'http://localhost:5000/api/',
    authUrl: 'http://localhost:5002/api/'
 };
 
