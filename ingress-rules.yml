@@ -25,5 +25,3 @@ spec:
       - backend:
          serviceName: auth-api-service
          servicePort: 5002
-
-
